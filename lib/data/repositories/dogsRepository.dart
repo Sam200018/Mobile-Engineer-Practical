@@ -1,7 +1,7 @@
 import 'package:dogs_we_love/model/dog.dart';
 
-import '../dataSources/dogs/local/dogs.dart';
-import '../dataSources/dogs/remote/dogs.dart';
+import '../dataSources/dogs/local/dogs_local_source.dart';
+import '../dataSources/dogs/remote/dogs_remote_source.dart';
 
 class DogsRepository {
   final DogsLocalSource dogsLocalSource;
@@ -12,18 +12,17 @@ class DogsRepository {
     required this.dogsRemoteSource,
   });
 
-  Future<List<Dog>?> loadDogsInfo() async {
+  Future<List<Dog>> loadDogsInfo() async {
     try {
       var dogsList = await dogsLocalSource.getDogsInfo();
-      if (dogsList != null && dogsList.isNotEmpty) {
+      if (dogsList.isNotEmpty) {
         return dogsList;
       } else {
         dogsList = await dogsRemoteSource.getDogs();
-        dogsLocalSource.insertDogs(dogsList!);
+        dogsLocalSource.insertDogs(dogsList);
         return dogsList;
       }
     } catch (e) {
-        print("Error: $e");
       rethrow;
     }
   }

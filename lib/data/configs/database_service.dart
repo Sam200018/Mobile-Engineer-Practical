@@ -1,15 +1,15 @@
-import 'package:dogs_we_love/model/Dog.dart';
+import 'package:dogs_we_love/model/dog.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
-   Database? _db;
+  Database? _db;
 
   Future<Database> get database async {
     if (_db != null) {
       return _db!;
     }
-    _db = await _openDatabase(); // Changed to private function
+    _db = await _openDatabase();
     return _db!;
   }
 
@@ -20,7 +20,6 @@ class DatabaseService {
       databasePath,
       version: 1,
       onCreate: (Database db, int version) async {
-        // When creating the db, create the table
         await db.execute('''
         CREATE TABLE dogs(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +29,6 @@ class DatabaseService {
         image TEXT )''');
       },
     );
-
   }
 
   Future<List<Map>?> selectAllDogs() async {
@@ -44,9 +42,10 @@ class DatabaseService {
     await db.transaction((txn) async {
       for (var dog in dogsList) {
         int id = await txn.rawInsert(
-          'INSERT INTO Dog(dogName, description, age, image) VALUES(${dog.dogName}, ${dog.description}, ${dog.age}, ${dog.image})',
+          'INSERT INTO dogs(dogName, description, age, image) VALUES(?, ?, ?, ?)',
+          [dog.dogName, dog.description, dog.age, dog.image],
         );
-        print('inserted1: $id');
+        print('inserted: $id');
       }
     });
   }

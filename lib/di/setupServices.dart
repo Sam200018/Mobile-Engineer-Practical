@@ -1,6 +1,6 @@
 import 'package:dogs_we_love/data/configs/database_service.dart';
-import 'package:dogs_we_love/data/dataSources/dogs/local/dogs.dart';
-import 'package:dogs_we_love/data/dataSources/dogs/remote/dogs.dart';
+import 'package:dogs_we_love/data/dataSources/dogs/local/dogs_local_source.dart';
+import 'package:dogs_we_love/data/dataSources/dogs/remote/dogs_remote_source.dart';
 import 'package:dogs_we_love/data/repositories/dogsRepository.dart';
 import 'package:get_it/get_it.dart';
 

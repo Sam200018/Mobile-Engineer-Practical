@@ -8,7 +8,7 @@ import '../../../configs/httpsConst.dart';
 class DogsRemoteSource{
 
 
-  Future<List<Dog>?> getDogs() async {
+  Future<List<Dog>> getDogs() async {
     final response = await http.get(dogsEndpoint);
 
     if(response.statusCode == 200){

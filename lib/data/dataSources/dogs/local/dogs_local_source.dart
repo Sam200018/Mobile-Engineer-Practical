@@ -1,13 +1,15 @@
 import 'package:dogs_we_love/data/configs/database_service.dart';
+import 'package:dogs_we_love/model/dog.dart';
 
-import '../../../../model/dog.dart';
+
+
 
 class DogsLocalSource {
   final DatabaseService dbService;
 
   const DogsLocalSource({required this.dbService});
 
-  Future<List<Dog>?> getDogsInfo() async {
+  Future<List<Dog>> getDogsInfo() async {
     final data = await dbService.selectAllDogs();
     if (data != null) {
       final dogsList =
@@ -23,11 +25,10 @@ class DogsLocalSource {
               .toList();
       return dogsList;
     }
-    return null;
+    return [];
   }
 
   Future insertDogs(List<Dog> dogsList) async {
-
-
+    dbService.insertAllDogs(dogsList);
   }
 }
